@@ -4,6 +4,8 @@ import {
   collection,
   addDoc,
   onSnapshot,
+  query,
+  where,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
@@ -192,30 +194,32 @@ const statisticsOrder = [
   "ISE", "ISR", "ICE", "ICR"
 ];
 
+const CURRENT_ROUND = "test_1";
+
 let statisticsListenerStarted = false;
 const STATISTICS_PARTICIPATION_KEY = "shucream-statistics-submitted";
 
 async function saveResultToStatistics(code) {
-  const alreadySubmitted = localStorage.getItem(STATISTICS_PARTICIPATION_KEY);
+  const submittedRound = localStorage.getItem(STATISTICS_PARTICIPATION_KEY);
 
-  if (alreadySubmitted) {
-    console.log("이 기기의 첫 번째 결과가 이미 통계에 반영되었습니다.");
+  if (submittedRound === CURRENT_ROUND) {
+    console.log("이 기기의 첫 번째 결과가 현재 회차 통계에 이미 반영되었습니다.");
     return;
   }
 
   try {
     await addDoc(collection(db, "responses"), {
       code: code,
+      round: CURRENT_ROUND,
       createdAt: serverTimestamp()
     });
 
-    localStorage.setItem(STATISTICS_PARTICIPATION_KEY, code);
-    console.log("첫 번째 결과가 통계에 반영되었습니다:", code);
+    localStorage.setItem(STATISTICS_PARTICIPATION_KEY, CURRENT_ROUND);
+    console.log("현재 회차 첫 번째 결과가 통계에 반영되었습니다:", code);
   } catch (error) {
     console.error("통계 저장 실패:", error);
   }
 }
-
 function startStatisticsListener() {
   if (statisticsListenerStarted) {
     return;
@@ -223,8 +227,13 @@ function startStatisticsListener() {
 
   statisticsListenerStarted = true;
 
-  onSnapshot(
+  const currentRoundQuery = query(
     collection(db, "responses"),
+    where("round", "==", CURRENT_ROUND)
+  );
+
+  onSnapshot(
+    currentRoundQuery,
     function (snapshot) {
       const counts = {
         FSE: 0,
