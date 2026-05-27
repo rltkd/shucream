@@ -45,14 +45,28 @@
       </div>
     </section>
 
-    <!-- 질문 완료 화면 -->
-    <section id="finishScreen" class="screen">
-      <div class="small-icon">✨</div>
-      <p class="label">모든 선택을 마쳤습니다</p>
-      <h2>당신만의 슈가<br>곧 완성됩니다</h2>
-      <p class="ready-text">
-        다음 단계에서 질문을 보완하고,<br>
-        선택에 따른 결과 화면을 연결할 거예요.
+     <!-- 결과 화면 -->
+    <section id="resultScreen" class="screen result-screen">
+      <p class="label">당신의 슈가 완성되었습니다</p>
+
+      <div id="resultIcon" class="result-icon">🍓</div>
+      <h2 id="resultName" class="result-name">딸기슈</h2>
+      <p id="resultCode" class="result-code">F - S - E</p>
+
+      <div class="result-card">
+        <p class="result-card-label">별명</p>
+        <h3 id="resultNickname">따뜻한 공감가</h3>
+
+        <p class="result-card-label">당신의 특징</p>
+        <ul id="resultTraits" class="result-traits"></ul>
+
+        <p class="result-card-label">이후 이야기</p>
+        <p id="resultStory" class="result-story"></p>
+      </div>
+
+      <p class="result-message">
+        선택받지 못했다는 이유로<br>
+        당신의 가치가 사라지는 것은 아닙니다.
       </p>
 
       <button id="restartButton" class="sub-button">처음부터 다시 하기</button>
