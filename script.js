@@ -193,13 +193,24 @@ const statisticsOrder = [
 ];
 
 let statisticsListenerStarted = false;
+const STATISTICS_PARTICIPATION_KEY = "shucream-statistics-submitted";
 
 async function saveResultToStatistics(code) {
+  const alreadySubmitted = localStorage.getItem(STATISTICS_PARTICIPATION_KEY);
+
+  if (alreadySubmitted) {
+    console.log("이 기기의 첫 번째 결과가 이미 통계에 반영되었습니다.");
+    return;
+  }
+
   try {
     await addDoc(collection(db, "responses"), {
       code: code,
       createdAt: serverTimestamp()
     });
+
+    localStorage.setItem(STATISTICS_PARTICIPATION_KEY, code);
+    console.log("첫 번째 결과가 통계에 반영되었습니다:", code);
   } catch (error) {
     console.error("통계 저장 실패:", error);
   }
