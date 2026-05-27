@@ -305,3 +305,13 @@ h2 {
 .result-screen .sub-button {
   margin-top: auto;
 }
+.cream-decoration {
+  overflow: hidden;
+}
+
+.cream-decoration img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
