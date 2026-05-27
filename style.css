@@ -395,3 +395,125 @@ h2 {
 .result-screen {
   min-height: 980px;
 }
+
+.hidden {
+  display: none;
+}
+
+.other-results {
+  width: 100%;
+  margin: 2px 0 20px;
+}
+
+.other-results-button {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #df8461;
+  border-radius: 16px;
+  background-color: #fffaf5;
+  color: #c96643;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.other-results-button:hover {
+  background-color: #fff2eb;
+}
+
+.other-results-panel {
+  margin-top: 14px;
+  padding: 16px 14px;
+  border-radius: 20px;
+  background-color: #fff2eb;
+}
+
+.other-results-guide {
+  margin: 0 0 14px;
+  color: #96766b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.other-results-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.other-result-button {
+  padding: 11px 8px;
+  border: 1px solid #efd3c7;
+  border-radius: 13px;
+  background-color: #fffdfb;
+  color: #53342c;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.other-result-button:hover {
+  border-color: #df8461;
+  background-color: #fff7f2;
+}
+
+.other-result-button.my-result {
+  border-color: #df8461;
+  background-color: #ffe8dc;
+}
+
+.other-result-detail {
+  margin-top: 14px;
+  padding: 15px 14px;
+  border-radius: 15px;
+  background-color: #ffffff;
+  text-align: left;
+}
+
+.other-detail-title {
+  margin: 0 0 5px;
+  color: #4d3128;
+  font-size: 18px;
+}
+
+.other-detail-code {
+  margin: 0 0 12px;
+  color: #c57859;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.other-detail-nickname {
+  margin: 0 0 12px;
+  color: #62463b;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.other-detail-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.other-detail-traits li {
+  padding: 5px 9px;
+  border-radius: 14px;
+  background-color: #fff2eb;
+  color: #72554b;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.other-detail-story {
+  margin: 0;
+  color: #72554b;
+  font-size: 13px;
+  line-height: 1.65;
+  word-break: keep-all;
+}

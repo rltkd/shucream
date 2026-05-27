@@ -46,6 +46,11 @@ const resultStory = document.getElementById("resultStory");
 const statsTotal = document.getElementById("statsTotal");
 const statsList = document.getElementById("statsList");
 
+const otherResultsButton = document.getElementById("otherResultsButton");
+const otherResultsPanel = document.getElementById("otherResultsPanel");
+const otherResultsList = document.getElementById("otherResultsList");
+const otherResultDetail = document.getElementById("otherResultDetail");
+
 const questions = [
   {
     icon: "🌙",
@@ -193,6 +198,51 @@ const statisticsOrder = [
   "FSE", "FSR", "FCE", "FCR",
   "ISE", "ISR", "ICE", "ICR"
 ];
+
+function prepareOtherResults(myCode) {
+  otherResultsPanel.classList.add("hidden");
+  otherResultDetail.classList.add("hidden");
+  otherResultsButton.textContent = "다른 슈들도 만나보기";
+  otherResultsList.innerHTML = "";
+  otherResultDetail.innerHTML = "";
+
+  statisticsOrder.forEach(function (code) {
+    const result = results[code];
+    const button = document.createElement("button");
+
+    button.className = "other-result-button";
+    button.textContent = `${result.icon} ${result.name}`;
+
+    if (code === myCode) {
+      button.classList.add("my-result");
+      button.textContent = `${result.icon} ${result.name} · 나`;
+    }
+
+    button.addEventListener("click", function () {
+      showOtherResultDetail(code);
+    });
+
+    otherResultsList.appendChild(button);
+  });
+}
+
+function showOtherResultDetail(code) {
+  const result = results[code];
+
+  otherResultDetail.innerHTML = `
+    <h3 class="other-detail-title">${result.icon} ${result.name}</h3>
+    <p class="other-detail-code">${code.split("").join(" - ")}</p>
+    <p class="other-detail-nickname">${result.nickname}</p>
+    <ul class="other-detail-traits">
+      ${result.traits.map(function (trait) {
+        return `<li>${trait}</li>`;
+      }).join("")}
+    </ul>
+    <p class="other-detail-story">${result.story}</p>
+  `;
+
+  otherResultDetail.classList.remove("hidden");
+}
 
 const CURRENT_ROUND = "test_1";
 
@@ -358,7 +408,9 @@ function showResult() {
     resultTraits.appendChild(listItem);
   });
 
+  prepareOtherResults(code);
   showScreen(resultScreen);
+
   startStatisticsListener();
   saveResultToStatistics(code);
 
@@ -399,4 +451,17 @@ choiceA.addEventListener("click", function () {
 
 choiceB.addEventListener("click", function () {
   selectChoice(1);
+});
+
+otherResultsButton.addEventListener("click", function () {
+  const isHidden = otherResultsPanel.classList.contains("hidden");
+
+  if (isHidden) {
+    otherResultsPanel.classList.remove("hidden");
+    otherResultsButton.textContent = "다른 슈들 접기";
+  } else {
+    otherResultsPanel.classList.add("hidden");
+    otherResultDetail.classList.add("hidden");
+    otherResultsButton.textContent = "다른 슈들도 만나보기";
+  }
 });
