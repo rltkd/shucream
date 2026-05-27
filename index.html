@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나만의 슈 찾기 프로젝트</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <!-- 시작 화면 -->
+    <section id="startScreen" class="screen active">
+      <div class="cream-decoration">🍰</div>
+
+      <p class="label">그림책 연계 참여 활동</p>
+      <h1>나만의 슈<br>찾기 프로젝트</h1>
+
+      <p class="story">
+        어느 날, 빵집 진열대에 홀로 남겨진 작은 슈크림이 되었습니다.<br><br>
+        선택받지 못한 채 밖으로 나온 당신은,<br>
+        이제 자신만의 길을 찾아 떠나려 합니다.
+      </p>
+
+      <p class="question">당신은 어떤 슈가 될까요?</p>
+
+      <button id="startButton" class="main-button">여정 시작하기</button>
+    </section>
+
+    <!-- 질문 화면 -->
+    <section id="questionScreen" class="screen question-screen">
+      <div class="progress-area">
+        <p id="progressText" class="progress-text">1 / 6</p>
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div id="questionIcon" class="question-icon">🌙</div>
+      <p id="questionTitle" class="label">첫 번째 밤</p>
+      <h2 id="questionText" class="question-text"></h2>
+
+      <div class="choice-area">
+        <button id="choiceA" class="choice-button"></button>
+        <button id="choiceB" class="choice-button"></button>
+      </div>
+    </section>
+
+    <!-- 질문 완료 화면 -->
+    <section id="finishScreen" class="screen">
+      <div class="small-icon">✨</div>
+      <p class="label">모든 선택을 마쳤습니다</p>
+      <h2>당신만의 슈가<br>곧 완성됩니다</h2>
+      <p class="ready-text">
+        다음 단계에서 질문을 보완하고,<br>
+        선택에 따른 결과 화면을 연결할 거예요.
+      </p>
+
+      <button id="restartButton" class="sub-button">처음부터 다시 하기</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
