@@ -66,15 +66,29 @@
         <p id="resultStory" class="result-story"></p>
       </div>
 
-      <p class="result-message">
+          <p class="result-message">
         선택받지 못했다는 이유로<br>
         당신의 가치가 사라지는 것은 아닙니다.
       </p>
 
+      <div class="stats-card">
+        <div class="stats-header">
+          <h3>오늘의 슈 분포</h3>
+          <p id="statsTotal">총 0개의 결과</p>
+        </div>
+
+        <p class="stats-notice">
+          현재는 다시 체험한 결과도 함께 집계됩니다.
+        </p>
+
+        <div id="statsList" class="stats-list">
+          <p class="stats-loading">통계를 불러오는 중...</p>
+        </div>
+      </div>
+
       <button id="restartButton" class="sub-button">처음부터 다시 하기</button>
-    </section>
   </main>
 
-  <script src="script.js"></script>
+   <script type="module" src="script.js"></script>
 </body>
 </html>

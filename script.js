@@ -1,3 +1,24 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCyr0kh01_AX0h57xvPkXuY8Wbwq6FdLQY",
+  authDomain: "shucream-statistics.firebaseapp.com",
+  projectId: "shucream-statistics",
+  storageBucket: "shucream-statistics.firebasestorage.app",
+  messagingSenderId: "1023143944203",
+  appId: "1:1023143944203:web:86690e3976ca7a618a670e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const startScreen = document.getElementById("startScreen");
 const questionScreen = document.getElementById("questionScreen");
 const resultScreen = document.getElementById("resultScreen");
@@ -19,6 +40,9 @@ const resultCode = document.getElementById("resultCode");
 const resultNickname = document.getElementById("resultNickname");
 const resultTraits = document.getElementById("resultTraits");
 const resultStory = document.getElementById("resultStory");
+
+const statsTotal = document.getElementById("statsTotal");
+const statsList = document.getElementById("statsList");
 
 const questions = [
   {
@@ -163,6 +187,92 @@ const results = {
   }
 };
 
+const statisticsOrder = [
+  "FSE", "FSR", "FCE", "FCR",
+  "ISE", "ISR", "ICE", "ICR"
+];
+
+let statisticsListenerStarted = false;
+
+async function saveResultToStatistics(code) {
+  try {
+    await addDoc(collection(db, "responses"), {
+      code: code,
+      createdAt: serverTimestamp()
+    });
+  } catch (error) {
+    console.error("통계 저장 실패:", error);
+  }
+}
+
+function startStatisticsListener() {
+  if (statisticsListenerStarted) {
+    return;
+  }
+
+  statisticsListenerStarted = true;
+
+  onSnapshot(
+    collection(db, "responses"),
+    function (snapshot) {
+      const counts = {
+        FSE: 0,
+        FSR: 0,
+        FCE: 0,
+        FCR: 0,
+        ISE: 0,
+        ISR: 0,
+        ICE: 0,
+        ICR: 0
+      };
+
+      snapshot.forEach(function (document) {
+        const code = document.data().code;
+
+        if (counts[code] !== undefined) {
+          counts[code]++;
+        }
+      });
+
+      renderStatistics(counts, snapshot.size);
+    },
+    function (error) {
+      console.error("통계 불러오기 실패:", error);
+      statsList.innerHTML =
+        '<p class="stats-loading">통계를 불러오지 못했습니다.</p>';
+    }
+  );
+}
+
+function renderStatistics(counts, total) {
+  statsTotal.textContent = `총 ${total}개의 결과`;
+
+  statsList.innerHTML = "";
+
+  const maximumCount = Math.max(...Object.values(counts), 1);
+
+  statisticsOrder.forEach(function (code) {
+    const result = results[code];
+    const count = counts[code];
+    const barWidth = count === 0 ? 0 : (count / maximumCount) * 100;
+
+    const row = document.createElement("div");
+    row.className = "stats-row";
+
+    row.innerHTML = `
+      <div class="stats-label">
+        <span>${result.icon} ${result.name}</span>
+        <span>${count}명</span>
+      </div>
+      <div class="stats-bar">
+        <div class="stats-bar-fill" style="width: ${barWidth}%"></div>
+      </div>
+    `;
+
+    statsList.appendChild(row);
+  });
+}
+
 let currentQuestion = 0;
 let answers = [];
 
@@ -229,6 +339,9 @@ function showResult() {
   });
 
   showScreen(resultScreen);
+  startStatisticsListener();
+  saveResultToStatistics(code);
+
 
   console.log("선택 결과:", answers);
   console.log("최종 유형:", code, result.name);
