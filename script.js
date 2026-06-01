@@ -247,7 +247,7 @@ function showOtherResultDetail(code) {
 const CURRENT_ROUND = "test_2";
 
 let statisticsListenerStarted = false;
-const STATISTICS_PARTICIPATION_KEY = "shucream-statistics-submitted";
+const STATISTICS_PARTICIPATION_KEY = "shucream-statistics-submitted-round";
 
 async function saveResultToStatistics(code) {
   const submittedRound = localStorage.getItem(STATISTICS_PARTICIPATION_KEY);
