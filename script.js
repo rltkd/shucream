@@ -244,7 +244,7 @@ function showOtherResultDetail(code) {
   otherResultDetail.classList.remove("hidden");
 }
 
-const CURRENT_ROUND = "presentation_1";
+const CURRENT_ROUND = "presentation_5";
 
 let statisticsListenerStarted = false;
 const STATISTICS_PARTICIPATION_KEY =
