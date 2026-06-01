@@ -244,11 +244,12 @@ function showOtherResultDetail(code) {
   otherResultDetail.classList.remove("hidden");
 }
 
-const CURRENT_ROUND = "test_3";
+const CURRENT_ROUND = "test_1";
 
 let statisticsListenerStarted = false;
 const STATISTICS_PARTICIPATION_KEY =
   `shucream-statistics-submitted-${CURRENT_ROUND}`;
+
 async function saveResultToStatistics(code) {
   const submittedRound = localStorage.getItem(STATISTICS_PARTICIPATION_KEY);
 
